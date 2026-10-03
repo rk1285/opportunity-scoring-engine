@@ -3,18 +3,18 @@ WITH base_data AS (
     SELECT *
     FROM read_csv_auto('data/raw/synthetic_seo_snow_rock_dataset_v3.csv')
 
-    WHERE report_date BETWEEN '$start_date' AND '$end_date'
-      AND page LIKE '$page_pattern'
+    WHERE report_date BETWEEN $start_date AND $end_date
+      --AND page LIKE $page_pattern
 
-      AND NOT regexp_matches(
-            lower(keyword),
-            '$brand_regex'
-      )
+    --   AND NOT regexp_matches(
+    --         lower(keyword),
+    --         $brand_regex
+    --   )
 
-      AND NOT regexp_matches(
-            lower(keyword),
-            '$short_brand_regex'
-      )
+    --   AND NOT regexp_matches(
+    --         lower(keyword),
+    --         $short_brand_regex
+    --   )
 
 ),
 
@@ -257,4 +257,4 @@ FROM gsc_data g
 INNER JOIN position_data pd
     ON g.rounded_position = pd.rounded_position
 
-ORDER BY opportunity_score DESC;
+ORDER BY opportunity_score DESC
