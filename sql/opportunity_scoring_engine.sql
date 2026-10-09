@@ -4,7 +4,7 @@ WITH base_data AS (
     FROM read_csv_auto('data/raw/synthetic_seo_snow_rock_dataset_v3.csv')
 
     WHERE report_date BETWEEN $start_date AND $end_date
-      --AND page LIKE $page_pattern
+    --AND page LIKE $page_pattern
 
     --   AND NOT regexp_matches(
     --         lower(keyword),
@@ -105,19 +105,19 @@ SELECT
     CASE
 
         WHEN g.total_impressions > pd.upper_quartile_impressions
-         AND g.rounded_position BETWEEN $pos_low AND $pos_high
+            AND g.rounded_position BETWEEN $pos_low AND $pos_high
         THEN 'Good Opportunity'
 
         WHEN g.total_impressions > pd.upper_quartile_impressions
-         AND g.rounded_position <= $striking_pos
+            AND g.rounded_position <= $striking_pos
         THEN 'Striking Distance'
 
         WHEN g.total_impressions > pd.median_impressions
-         AND g.rounded_position <= $improve_pos
+            AND g.rounded_position <= $improve_pos
         THEN 'Try to Improve'
 
         WHEN g.rounded_position < $ignore_pos
-         AND g.total_impressions < pd.median_impressions
+            AND g.total_impressions < pd.median_impressions
         THEN 'Ignore'
 
         WHEN
@@ -127,9 +127,9 @@ SELECT
                 + 1
             ) >= $min_words
 
-         AND g.avg_ctr > $ctr_threshold
+            AND g.avg_ctr > $ctr_threshold
 
-         AND g.rounded_position > 3
+            AND g.rounded_position > 3
 
         THEN 'Long Tail Opportunity'
 
